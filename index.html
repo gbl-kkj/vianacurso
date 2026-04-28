@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viana Curso</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #030006;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(168, 85, 247, 0.35), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.28), transparent 26%),
+        radial-gradient(circle at 50% 90%, rgba(88, 28, 135, 0.45), transparent 30%),
+        linear-gradient(135deg, #050008 0%, #0a0014 45%, #000 100%);
+      z-index: -3;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent 85%);
+      z-index: -2;
+      animation: gridMove 18s linear infinite;
+    }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(216, 180, 254, 0.9);
+      box-shadow: 0 0 18px rgba(168, 85, 247, 0.9);
+      animation: floatParticle linear infinite;
+    }
+
+    .particle:nth-child(1) { left: 8%; top: 80%; animation-duration: 12s; }
+    .particle:nth-child(2) { left: 20%; top: 65%; animation-duration: 16s; animation-delay: -3s; }
+    .particle:nth-child(3) { left: 35%; top: 88%; animation-duration: 18s; animation-delay: -6s; }
+    .particle:nth-child(4) { left: 55%; top: 72%; animation-duration: 14s; animation-delay: -2s; }
+    .particle:nth-child(5) { left: 70%; top: 92%; animation-duration: 17s; animation-delay: -7s; }
+    .particle:nth-child(6) { left: 88%; top: 75%; animation-duration: 15s; animation-delay: -5s; }
+    .particle:nth-child(7) { left: 42%; top: 95%; animation-duration: 20s; animation-delay: -9s; }
+    .particle:nth-child(8) { left: 93%; top: 50%; animation-duration: 13s; animation-delay: -4s; }
+
+    header {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #7c3aed, #c084fc);
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.5);
+      font-weight: 900;
+    }
+
+    .brand span span {
+      color: #c084fc;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(18px);
+    }
+
+    nav a {
+      color: #d8d8d8;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.25s;
+    }
+
+    nav a:hover {
+      color: #c084fc;
+    }
+
+    .header-btn {
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      box-shadow: 0 0 28px rgba(168, 85, 247, 0.35);
+      font-size: 14px;
+      font-weight: 700;
+      transition: 0.25s;
+    }
+
+    .header-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.55);
+    }
+
+    section {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: calc(100vh - 90px);
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      align-items: center;
+      gap: 70px;
+      padding: 70px 0 90px;
+    }
+
+    .hero-content {
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-logo-area {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .hero-logo {
+      width: 165px;
+      height: 165px;
+      object-fit: contain;
+      border-radius: 28px;
+      padding: 12px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.12);
+      filter: drop-shadow(0 0 32px rgba(168, 85, 247, 0.6));
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #d8b4fe;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -3px;
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+    h1 span {
+      color: #b66cff;
+      text-shadow: 0 0 35px rgba(168, 85, 247, 0.75);
+    }
+
+    .hero p {
+      color: #cfc9d8;
+      font-size: 17px;
+      line-height: 1.75;
+      max-width: 650px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      padding: 15px 24px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 15px;
+      transition: 0.25s;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #6d28d9, #a855f7, #c084fc);
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.38);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 0 55px rgba(168, 85, 247, 0.62);
+    }
+
+    .btn-secondary {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.11);
+      transform: translateY(-4px);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 620px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(14px);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      color: #fff;
+    }
+
+    .stat span {
+      color: #aaa3b7;
+      font-size: 12px;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 28px;
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 0 70px rgba(168, 85, 247, 0.22);
+      backdrop-filter: blur(22px);
+      animation: floatCard 4s ease-in-out infinite, fadeUp 1.1s ease both;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(192,132,252,0.55), transparent 35%, rgba(124,58,237,0.45));
+      z-index: -1;
+      filter: blur(18px);
+      opacity: 0.45;
+    }
+
+    .course-cover {
+      height: 210px;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(168,85,247,0.7), rgba(3,0,6,0.65)),
+        radial-gradient(circle at top left, #e9d5ff, transparent 28%);
+      border: 1px solid rgba(255,255,255,0.16);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      margin-bottom: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .course-cover::after {
+      content: "AE";
+      position: absolute;
+      right: -18px;
+      top: -24px;
+      font-size: 130px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.08);
+    }
+
+    .course-cover small {
+      color: #ede9fe;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .course-cover h2 {
+      font-size: 29px;
+      line-height: 1.05;
+      max-width: 300px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #d9d3e5;
+      font-size: 14px;
+    }
+
+    .check i {
+      width: 23px;
+      height: 23px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(168,85,247,0.18);
+      border: 1px solid rgba(168,85,247,0.35);
+      color: #d8b4fe;
+      font-style: normal;
+      font-size: 12px;
+      flex: 0 0 auto;
+    }
+
+    .price-box {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .price-box small {
+      display: block;
+      color: #aaa3b7;
+      margin-bottom: 4px;
+    }
+
+    .price-box h3 {
+      font-size: 38px;
+      line-height: 1;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 46px;
+    }
+
+    .section-title .tag {
+      margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+      margin-bottom: 16px;
+    }
+
+    .section-title p {
+      color: #bfb7cc;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .features, .modules, .testimonials, .faq, .final-cta {
+      padding: 90px 0;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card, .module-card, .testimonial-card, .faq-item {
+      border-radius: 26px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(18px);
+      transition: 0.25s;
+    }
+
+    .feature-card:hover, .module-card:hover, .testimonial-card:hover, .faq-item:hover {
+      transform: translateY(-6px);
+      border-color: rgba(192,132,252,0.45);
+      box-shadow: 0 0 45px rgba(168,85,247,0.14);
+    }
+
+    .feature-card {
+      padding: 28px;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.75), rgba(192,132,252,0.38));
+      box-shadow: 0 0 30px rgba(168,85,247,0.25);
+      font-size: 20px;
+    }
+
+    .feature-card h3, .module-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p, .module-card p, .testimonial-card p, .faq-item p {
+      color: #bfb7cc;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .module-card {
+      padding: 24px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .module-number {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      background: rgba(168,85,247,0.14);
+      border: 1px solid rgba(168,85,247,0.35);
+      color: #d8b4fe;
+      font-weight: 900;
+    }
+
+    .bonus-wrap {
+      padding: 32px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.26), rgba(255,255,255,0.055));
+      border: 1px solid rgba(192,132,252,0.28);
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+      box-shadow: 0 0 55px rgba(168,85,247,0.16);
+    }
+
+    .bonus-wrap h3 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .bonus-wrap p {
+      color: #cfc9d8;
+      line-height: 1.7;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .testimonial-card {
+      padding: 26px;
+    }
+
+    .stars {
+      color: #d8b4fe;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #7c3aed, #c084fc);
+      font-weight: 900;
+    }
+
+    .person strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .person span {
+      color: #aaa3b7;
+      font-size: 12px;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 14px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      padding: 24px;
+    }
+
+    .faq-item h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .final-cta-box {
+      text-align: center;
+      padding: 58px 28px;
+      border-radius: 38px;
+      background:
+        radial-gradient(circle at top, rgba(192,132,252,0.28), transparent 45%),
+        rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 0 70px rgba(168,85,247,0.18);
+    }
+
+    .final-cta-box h2 {
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+
+    .final-cta-box p {
+      max-width: 680px;
+      margin: 0 auto 28px;
+      color: #cfc9d8;
+      line-height: 1.7;
+    }
+
+    footer {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 30px 0 45px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #91899d;
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(34px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    @keyframes floatParticle {
+      from { transform: translateY(0) scale(1); opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      to { transform: translateY(-105vh) scale(0.55); opacity: 0; }
+    }
+
+    @keyframes gridMove {
+      from { background-position: 0 0; }
+      to { background-position: 55px 55px; }
+    }
+
+    @media (max-width: 980px) {
+      nav { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding-top: 40px;
+      }
+
+      .hero-logo-area {
+        justify-content: flex-start;
+      }
+
+      .stats, .feature-grid, .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .module-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bonus-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 560px) {
+      header {
+        width: min(100% - 28px, 1180px);
+      }
+
+      section, footer {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .header-btn {
+        display: none;
+      }
+
+      .hero-logo {
+        width: 130px;
+        height: 130px;
+      }
+
+      h1 {
+        letter-spacing: -1.6px;
+      }
+
+      .hero-actions, .price-box {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" aria-hidden="true">
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+  </div>
+
+  <header>
+    <a href="#inicio" class="brand">
+      <div class="brand-mark">V</div>
+      <span>Curso<span> Viana</span></span>
+    </a>
+
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="#beneficios">Benefícios</a>
+      <a href="#conteudo">Conteúdo</a>
+      <a href="#depoimentos">Resultados</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+
+    <a href="https://pay.cakto.com.br/ss9c9mz_842074" class="header-btn">Comprar agora</a>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="hero-logo-area">
+        <img src="./logo.png" class="hero-logo" alt="Logo Viana Curso" onerror="this.style.display='none'">
+      </div>
+
+      <span class="tag">✦ Mais de 1000 clientes satisfeitos</span>
+
+      <h1>Aprenda edição do <span>zero</span> ao nível avançado.</h1>
+
+      <p>
+        O curso feito pra quem quer evoluir nas edições, aprender técnicas profissionais, usar atalhos, aplicar efeitos prontos e criar vídeos com aparência muito mais profissional sem perder tempo.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://pay.cakto.com.br/ss9c9mz_842074" class="btn btn-primary">Quero começar agora</a>
+        <a href="#conteudo" class="btn btn-secondary">Ver conteúdo do curso</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong>1000+</strong>
+          <span>clientes satisfeitos</span>
+        </div>
+        <div class="stat">
+          <strong>4+</strong>
+          <span>módulos principais</span>
+        </div>
+        <div class="stat">
+          <strong>R$50</strong>
+          <span>acesso completo</span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-card">
+      <div class="course-cover">
+        <small>Curso de edição</small>
+        <h2>After Effects, vendas e estrutura profissional</h2>
+      </div>
+
+      <div class="checklist">
+        <div class="check"><i>✓</i> Aprenda a otimizar seu After Effects</div>
+        <div class="check"><i>✓</i> Renderização em alta qualidade</div>
+        <div class="check"><i>✓</i> Efeitos, atalhos e técnicas práticas</div>
+        <div class="check"><i>✓</i> Estratégia para conseguir clientes</div>
+        <div class="check"><i>✓</i> Como montar um servidor bonito</div>
+      </div>
+
+      <div class="price-box" id="comprar">
+        <div>
+          <small>Acesso completo por:</small>
+          <h3>R$ 50,00</h3>
+        </div>
+        <a href="https://pay.cakto.com.br/ss9c9mz_842074" class="btn btn-primary">Comprar</a>
+      </div>
+    </aside>
+  </section>
+
+  <section class="features" id="beneficios">
+    <div class="section-title">
+      <span class="tag">Por que esse curso?</span>
+      <h2>Aprenda o que realmente importa para evoluir.</h2>
+      <p>Conteúdo direto, visual profissional e focado em prática. Ideal para quem quer criar edições melhores e também transformar isso em venda.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3>Mais velocidade</h3>
+        <p>Aprenda atalhos, organização e técnicas para não perder tempo dentro da edição.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">🎬</div>
+        <h3>Visual profissional</h3>
+        <p>Use efeitos e métodos que deixam suas edits com aparência mais limpa, impactante e vendável.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">💰</div>
+        <h3>Foco em vender</h3>
+        <p>Além de editar, você aprende caminhos para conseguir clientes e organizar seu servidor.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="modules" id="conteudo">
+    <div class="section-title">
+      <span class="tag">Conteúdo do curso</span>
+      <h2>Do básico até a aplicação real.</h2>
+      <p>Você aprende a usar as ferramentas, melhorar o desempenho, renderizar melhor e montar uma estrutura para vender seus serviços.</p>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-card">
+        <div class="module-number">01</div>
+        <div>
+          <h3>Apresentação</h3>
+          <p>Boas-vindas ao curso, visão geral do que você vai aprender e como aproveitar melhor cada aula.</p>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">02</div>
+        <div>
+          <h3>Introdução ao After Effects</h3>
+          <p>Aprenda a otimizar seu After Effects, entender funções essenciais e preparar o programa para editar melhor.</p>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">03</div>
+        <div>
+          <h3>Renderização e qualidade</h3>
+          <p>Configure sua exportação para entregar vídeos com qualidade profissional, sem deixar o arquivo pesado demais.</p>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">04</div>
+        <div>
+          <h3>Como conseguir clientes</h3>
+          <p>Aplicação real para aprender formas de chamar atenção, apresentar seu serviço e conseguir clientes para seu servidor.</p>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">05</div>
+        <div>
+          <h3>Como montar seu servidor</h3>
+          <p>Passo a passo para deixar seu servidor mais bonito, organizado e preparado para manter pessoas e vender melhor.</p>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">06</div>
+        <div>
+          <h3>Efeitos e atalhos prontos</h3>
+          <p>Use recursos práticos para acelerar sua edição e chegar em um resultado mais forte sem complicação.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bonus-wrap">
+      <div>
+        <h3>Bônus: estrutura para vender melhor</h3>
+        <p>Além da edição, você aprende como organizar sua apresentação, seu servidor e seu processo para parecer mais profissional.</p>
+      </div>
+      <a href="https://pay.cakto.com.br/ss9c9mz_842074" class="btn btn-primary">Garantir acesso</a>
+    </div>
+  </section>
+
+  <section class="testimonials" id="depoimentos">
+    <div class="section-title">
+      <span class="tag">Resultados</span>
+      <h2>Feito para quem quer evoluir de verdade.</h2>
+      <p>Use essa área para colocar feedbacks reais dos seus alunos/clientes quando você tiver prints ou nomes para adicionar.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>“Antes eu demorava muito para editar. Depois que aprendi a organizar os efeitos e atalhos, ficou muito mais rápido.”</p>
+        <div class="person">
+          <div class="avatar">L</div>
+          <div>
+            <strong>Lucas</strong>
+            <span>Aluno do curso</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>“O conteúdo é direto e ajuda muito quem está começando. A parte de servidor também me ajudou a vender melhor.”</p>
+        <div class="person">
+          <div class="avatar">M</div>
+          <div>
+            <strong>Mateus</strong>
+            <span>Editor iniciante</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>“Aprendi a renderizar com mais qualidade e deixar minhas edits com visual mais profissional.”</p>
+        <div class="person">
+          <div class="avatar">R</div>
+          <div>
+            <strong>Rafael</strong>
+            <span>Criador de conteúdo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="duvidas">
+    <div class="section-title">
+      <span class="tag">Dúvidas frequentes</span>
+      <h2>Perguntas rápidas antes de comprar.</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>O curso é para iniciantes?</h3>
+        <p>Sim. A página apresenta o curso como uma jornada do zero até o avançado, então ele é ideal para quem quer começar e evoluir com prática.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Preciso já saber After Effects?</h3>
+        <p>Não. O curso tem uma parte de introdução, otimização, funções essenciais e renderização para ajudar quem está começando.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>O curso ensina só edição?</h3>
+        <p>Não. Além de edição, também tem conteúdo sobre conseguir clientes e montar um servidor mais bonito e organizado.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Como faço para comprar?</h3>
+        <p>Basta clicar em qualquer botão de compra da página. Ele já está ligado ao seu link de pagamento.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="final-cta-box">
+      <span class="tag">Acesso completo por R$ 50,00</span>
+      <h2>Comece hoje e evolua suas edições.</h2>
+      <p>Aprenda técnicas, atalhos, renderização, organização e estratégias para transformar suas edições em algo mais profissional.</p>
+      <a href="https://pay.cakto.com.br/ss9c9mz_842074" class="btn btn-primary">Comprar o curso agora</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Curso Viana. Todos os direitos reservados.</span>
+    <span>Site roxo/preto • Poppins • Landing page completa</span>
+  </footer>
+</body>
+</html>
